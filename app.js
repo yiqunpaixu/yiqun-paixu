@@ -77,7 +77,7 @@
   '做得不错，完成今天的一小步！',
  ];
  const design={palette:'forest',layout:'illustrated',radius:18};
- let corpusMedia=null,corpusEnd=0,corpusTimer=null,corpusCheckTimer=null,feedbackTimer=null,feedbackAudio=null;
+ let corpusMedia=null,corpusAudio=null,corpusAudioSource='',corpusPlaybackToken=0,corpusSeekTimer=null,corpusEnd=0,corpusTimer=null,corpusCheckTimer=null,feedbackTimer=null,feedbackAudio=null;
  const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const coverHTML=(id,className,lazy=false)=>{const cover=articleCovers.get(id),original=cover&&(className==='ls-corpus-hero'&&cover.banner?cover.banner:cover.src),src=delivery?delivery.coverURL(id,original):original;return cover&&src?`<img class="${className}" src="${escapeHTML(src)}" alt="${escapeHTML(cover.alt)}" ${lazy?'loading="lazy" ':''}decoding="async">`:'';};
  const neutralChunk=s=>String(s).replace(/[.!?,;:]+\s*$/,'').toLowerCase().replace(/\bi\b/g,'I');
@@ -90,7 +90,7 @@
  // Progression is automatic; ignore the legacy manual preference after removing its control.
  function restorePreferences(){try{const saved=JSON.parse(localStorage.getItem('tingxu-preferences-v1'))||JSON.parse(localStorage.getItem('tingxu-demo-v1'))?.privateContent;if(!saved)return;state.replay=saved.replay!==false;if(saved.design){if(['forest','ink'].includes(saved.design.palette))design.palette=saved.design.palette;if(['illustrated','compact'].includes(saved.design.layout))design.layout=saved.design.layout;if(Number.isFinite(saved.design.radius))design.radius=Math.max(8,Math.min(24,saved.design.radius));}}catch(error){}}
  function applyDesign(){root.dataset.layout=design.layout;root.style.setProperty('--ls-radius',design.radius+'px');const ink=design.palette==='ink';root.style.setProperty('--ls-accent',ink?'#314f6d':'#245b48');root.style.setProperty('--ls-soft',ink?'#e8edf0':'#e8eee7');root.style.setProperty('--ls-on-accent','#fffdf8');}
- function stopCorpus(){if(corpusMedia){corpusMedia.pause();corpusMedia.ontimeupdate=null;corpusMedia.onended=null;corpusMedia.onerror=null;corpusMedia=null;}state.corpusPlaying=false;state.corpusLine=-1;}
+ function stopCorpus(){corpusPlaybackToken++;clearTimeout(corpusSeekTimer);if(corpusMedia){corpusMedia.pause();for(const event of ['ontimeupdate','onended','onerror','onloadedmetadata','oncanplay','onseeked','onplaying'])corpusMedia[event]=null;corpusMedia=null;}state.corpusPlaying=false;state.corpusLine=-1;}
  function stopTimers(){clearTimeout(corpusTimer);clearTimeout(corpusCheckTimer);clearTimeout(feedbackTimer);stopCorpus();}
  let articleRequest=0;
  function withArticle(id,action){
@@ -128,12 +128,44 @@
   return `<span class="ls-eyebrow">${escapeHTML(exam.title)} · ${section.kind}</span><h1 class="ls-corpus-title">${escapeHTML(section.title)}</h1>${coverHTML(section.id,'ls-corpus-hero')}
    <div class="ls-corpus-start"><button type="button" class="ls-next" data-action="start-corpus-practice">${icon('headphones')}开始意群排序 · ${taskCount} 句</button><span>每次从第一句开始</span></div>`;
  }
- function playCorpus(start,end,lineIndex=-1,done=null,loop=false){if(delivery&&!delivery.isFresh(state.corpusId)){withArticle(state.corpusId,()=>playCorpus(start,end,lineIndex,done,loop));return;}const section=corpusSections.get(state.corpusId),exam=section&&corpusExams.get(section.examId);if(!exam)return;stopCorpus();state.corpusError=false;state.corpusLine=lineIndex;corpusEnd=end;const offset=section.audioOffset||0,audio=new Audio(section.audio||exam.audio);corpusMedia=audio;audio.preload='auto';audio.playbackRate=state.rate;audio.onloadedmetadata=()=>{if(audio===corpusMedia)audio.currentTime=start-offset;};const finish=()=>{if(audio!==corpusMedia)return;if(loop&&state.view==='corpus-practice'&&['arrange','error'].includes(state.corpusTaskStage)){
-    if(audio.currentTime+offset<corpusEnd-.05&&!audio.ended)return;
+ function playCorpus(start,end,lineIndex=-1,done=null,loop=false){
+  if(delivery&&!delivery.isFresh(state.corpusId)){withArticle(state.corpusId,()=>playCorpus(start,end,lineIndex,done,loop));return;}
+  const section=corpusSections.get(state.corpusId),exam=section&&corpusExams.get(section.examId);if(!exam)return;
+  stopCorpus();state.corpusError=false;state.corpusLine=lineIndex;corpusEnd=end;
+  const offset=section.audioOffset||0,source=section.audio||exam.audio,target=Math.max(0,start-offset);
+  // Reuse the user-activated element within the article instead of reloading it for every sentence.
+  if(!corpusAudio||corpusAudioSource!==source){corpusAudio=new Audio(source);corpusAudioSource=source;}
+  const audio=corpusAudio,token=corpusPlaybackToken;const active=()=>audio===corpusMedia&&token===corpusPlaybackToken;corpusMedia=audio;audio.preload='auto';audio.playbackRate=state.rate;
+  let positioned=false,metadataKnown=audio.readyState>=1;
+  const fail=()=>{if(active()){stopCorpus();state.corpusError=true;render();}};
+  const align=()=>{
+   if(!active()||positioned||!metadataKnown)return;
+   try{
+    if(!audio.seeking&&Math.abs(audio.currentTime-target)>.03){audio.currentTime=target;if(audio.seeking)return;}
+    if(audio.seeking||Math.abs(audio.currentTime-target)>.03)return;
+    positioned=true;clearTimeout(corpusSeekTimer);audio.muted=false;
+   }catch{fail();}
+  };
+  const beginRange=()=>{
+   positioned=false;audio.muted=true;clearTimeout(corpusSeekTimer);corpusSeekTimer=setTimeout(fail,15000);
+   align();
+   // Keep play() in the click call stack; remain muted until the seek is confirmed.
+   audio.play().then(()=>{if(active()){align();render();}}).catch(fail);
+  };
+  audio.onloadedmetadata=()=>{metadataKnown=true;align();};audio.oncanplay=align;audio.onseeked=align;audio.onplaying=align;
+  const finish=()=>{
+   if(!active()||!positioned)return;
+   if(audio.currentTime+offset<corpusEnd-.05&&!audio.ended)return;
+   if(loop&&state.view==='corpus-practice'&&['arrange','error'].includes(state.corpusTaskStage)){
     state.corpusLoopCount++;
-    if(state.corpusLoopCount<corpusLoopLimit){audio.currentTime=start-offset;audio.play().catch(()=>{if(audio===corpusMedia){stopCorpus();state.corpusError=true;render();}});return;}
+    if(state.corpusLoopCount<corpusLoopLimit){beginRange();return;}
     stopCorpus();announce('本句已循环播放5次，已暂停。');render();return;
-   }stopCorpus();render();if(done)done();};audio.ontimeupdate=()=>{if(audio!==corpusMedia)return;if(audio.currentTime+offset>=corpusEnd-.05){finish();return;}const current=section.lines.findIndex(line=>audio.currentTime+offset>=line.start&&audio.currentTime+offset<line.end);root.querySelectorAll('.ls-corpus-lines li').forEach((item,i)=>item.classList.toggle('active',i===current));};audio.onended=finish;audio.onerror=()=>{if(audio===corpusMedia){stopCorpus();state.corpusError=true;render();}};state.corpusPlaying=true;audio.play().then(()=>{if(audio===corpusMedia)render();}).catch(()=>{if(audio===corpusMedia){stopCorpus();state.corpusError=true;render();}});render();}
+   }
+   stopCorpus();render();if(done)done();
+  };
+  audio.ontimeupdate=()=>{if(!active()||!positioned)return;if(audio.currentTime+offset>=corpusEnd-.05){finish();return;}const current=section.lines.findIndex(line=>audio.currentTime+offset>=line.start&&audio.currentTime+offset<line.end);root.querySelectorAll('.ls-corpus-lines li').forEach((item,i)=>item.classList.toggle('active',i===current));};
+  audio.onended=finish;audio.onerror=fail;state.corpusPlaying=true;beginRange();render();
+ }
  function startCorpusPractice(articleId=state.corpusId){withArticle(articleId,()=>beginCorpusPractice(articleId));}
  function beginCorpusPractice(articleId=state.corpusId){if(!corpusSections.has(articleId)||!(corpusPractice[articleId]||[]).length)return;state.corpusId=articleId;state.corpusEntry='library';state.corpusReviewMode=false;openCorpusTask(0);}
  function corpusTasks(){return corpusPractice[state.corpusId]||[];}
