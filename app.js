@@ -54,6 +54,10 @@
  articleCovers.set('cet4-2025-06-set1-news-report-2',{src:'images/mail-theft-investigation/cover-wide.webp',alt:"调查人员核查信件和钥匙材料"});
  articleCovers.set('cet4-2025-06-set1-news-report-3',{src:'images/fast-fashion-waste/cover-wide.webp',alt:"研究人员讨论衣物与废弃物管理"});
  articleCovers.set('cet4-2025-06-set1-conversation-1',{src:'images/rush-hour-commute/cover-wide.webp',alt:"同事讨论通勤困扰"});
+ articleCovers.set("cet4-2025-06-set1-passage-3",{src:"images/animal-collections-history/cover-wide.webp",alt:"人类与动物收藏史的主题情境"});
+ articleCovers.set("cet4-2025-06-set1-passage-2",{src:"images/status-signaling/cover-wide.webp",alt:"身份展示、合作与竞争的主题情境"});
+ articleCovers.set("cet4-2025-06-set1-passage-1",{src:"images/language-origins/cover-wide.webp",alt:"语言起源：声音模仿与手势理论的主题情境"});
+ articleCovers.set("cet4-2025-06-set1-conversation-2",{src:"images/scar-surgery/cover-wide.webp",alt:"朋友讨论Johnny的疤痕与个人决定"});
  const corpusSections=new Map(corpus.sections.map(section=>[section.id,section]));
  const corpusExams=new Map(corpus.exams.map(exam=>[exam.id,exam]));
  const libraryFeatureChoices=corpus.sections.filter(section=>(corpusPractice[section.id]||[]).length).map(section=>section.id);
