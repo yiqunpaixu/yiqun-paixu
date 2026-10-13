@@ -97,6 +97,7 @@ body{font-family:"Aptos","Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
 #listening-studio .ls-corpus-title{font-size:32px;line-height:1.15;margin:4px 0 10px}
 #listening-studio .ls-corpus-hero{height:180px;border-radius:4px;margin:10px 0 12px;object-position:center 42%}
 #listening-studio .ls-home-article-info{position:relative;z-index:1;margin:-24px 0 28px;padding-top:24px;border-radius:0 0 18px 18px;background:var(--ls-paper);overflow:hidden}
+#listening-studio .ls-completion-article-info{margin-top:24px;border-radius:18px;background:var(--ls-paper);overflow:hidden}
 #listening-studio .ls-corpus-start{display:flex;flex-direction:column;align-items:stretch;margin:16px 0 12px;gap:8px}
 #listening-studio .ls-corpus-start .ls-next{width:100%;min-width:0;min-height:60px;justify-content:center;padding:15px 18px;background:#245b48;color:#fffdf8;font-size:18px;font-weight:700;box-shadow:0 7px 17px #1d46321c}
 #listening-studio .ls-corpus-start .ls-next svg{width:22px;height:22px}
@@ -205,6 +206,8 @@ body{font-family:"Aptos","Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
 #listening-studio .ls-record-mastery dd{margin:3px 0 0;font-size:18px;font-weight:600;line-height:1.5}
 #listening-studio .ls-review-row small.ls-record-evidence{display:block;margin-bottom:8px;line-height:1.7}
 #listening-studio .ls-stats{border-top:1px solid #aebdb0;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+#listening-studio .ls-stat .ls-study-duration{font-size:clamp(22px,3.8vw,32px);line-height:1.35;overflow-wrap:anywhere}
+#listening-studio .ls-record-time-note{font-size:13px;line-height:1.7;color:var(--ls-muted);margin:12px 0 24px}
 #listening-studio .ls-stat{border-top:0}
 #listening-studio .ls-stat strong{font-size:32px;letter-spacing:-.06em}
 #listening-studio button:focus-visible{outline:2px solid #a95135;outline-offset:3px}
@@ -256,6 +259,7 @@ body{font-family:"Aptos","Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
 #listening-studio .ls-sentence-illustration img{border-radius:8px}
 @supports(corner-shape:superellipse(2)){
   #listening-studio .ls-home-article-info{corner-shape:superellipse(2);border-radius:0 0 32px 32px}
+  #listening-studio .ls-completion-article-info{corner-shape:superellipse(2);border-radius:24px}
   #listening-studio .ls-mark{corner-shape:superellipse(2);border-radius:14px}
   #listening-studio :is(.ls-featured-book,.ls-archive-book),
   #listening-studio .ls-corpus-card{corner-shape:superellipse(2);border-radius:32px}
@@ -327,7 +331,7 @@ body{font-family:"Aptos","Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
 }
 @media(orientation:landscape) and (min-width:900px){
   #listening-studio .ls-corpus-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  #listening-studio .ls-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  #listening-studio .ls-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
 /* Short landscape screens keep the listening controls beside the cut selector. */
 @media(orientation:landscape) and (min-width:640px) and (max-height:560px){

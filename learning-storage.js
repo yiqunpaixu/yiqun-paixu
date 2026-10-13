@@ -68,7 +68,95 @@
     }
   }
 
-  const api = {version, migrateProgress, migrateReview, read, save};
+  const listeningPrefix = 'tingxu-listening-time-v1:';
+  const listeningPage = Object.create(null);
+  let listeningSession;
+  const validArticle = id => typeof id === 'string' && /^[a-z0-9-]{1,160}$/.test(id);
+  const validDate = value => Number.isFinite(value) && value > 0 && value <= 8640000000000000 ? value : 0;
+
+  function readListeningTimes() {
+    const total = Object.create(null);
+    const merge = articles => {
+      if (!validObject(articles)) return;
+      for (const [id, row] of Object.entries(articles)) {
+        if (!validArticle(id) || !validObject(row) || !Number.isFinite(row.seconds) || row.seconds <= 0) continue;
+        const entry = total[id] || {seconds: 0, lastAt: 0};
+        const seconds = entry.seconds + row.seconds;
+        if (Number.isFinite(seconds)) total[id] = {seconds, lastAt: Math.max(entry.lastAt, validDate(row.lastAt))};
+      }
+    };
+    try {
+      for (let i = 0; i < localStorage.length; i += 1) {
+        const key = localStorage.key(i);
+        if (!key?.startsWith(listeningPrefix) || key === listeningSession) continue;
+        try {
+          const session = JSON.parse(localStorage.getItem(key));
+          if (session?.version === 1) merge(session.articles);
+        } catch { /* A malformed session must not hide other valid sessions. */ }
+      }
+    } catch { /* The current page still has its in-memory time when storage is unavailable. */ }
+    merge(listeningPage);
+    return total;
+  }
+
+  function addListeningTime(id, seconds, at = Date.now()) {
+    if (!validArticle(id) || !Number.isFinite(seconds) || seconds <= 0) return false;
+    const previous = listeningPage[id] || {seconds: 0, lastAt: 0};
+    if (!Number.isFinite(previous.seconds + seconds)) return false;
+    listeningPage[id] = {seconds: previous.seconds + seconds, lastAt: Math.max(previous.lastAt, validDate(at))};
+    // Each page writes its own counter; simultaneous tabs cannot overwrite one another.
+    if (!listeningSession) {
+      let id;
+      try { id = globalThis.crypto?.randomUUID?.(); } catch { /* Fall back when crypto is restricted. */ }
+      listeningSession = listeningPrefix + (id || Date.now().toString(36) + '-' + Math.random().toString(36).slice(2));
+    }
+    try {
+      localStorage.setItem(listeningSession, JSON.stringify({version: 1, articles: listeningPage}));
+      return true;
+    } catch { return false; }
+  }
+
+  function createPlaybackMeter(audio, record, {start = 0, end = Infinity, now = () => Date.now(), interval = 250} = {}) {
+    let pending = 0, closed = false;
+    const rate = () => Number.isFinite(audio.playbackRate) && audio.playbackRate > 0 ? audio.playbackRate : 1;
+    const audible = () => !audio.paused && !audio.ended && !audio.seeking && !audio.muted && audio.volume !== 0 && audio.readyState >= 2;
+    const position = () => Number.isFinite(audio.currentTime) ? Math.max(start, Math.min(end, audio.currentTime)) : null;
+    let lastRaw = audio.currentTime, lastPosition = position(), lastWall = now(), lastRate = rate(), lastAudible = false;
+    const commit = () => { if (pending > 0) { const seconds = pending; pending = 0; record(seconds); } };
+    const reset = () => { commit(); lastRaw = audio.currentTime; lastPosition = position(); lastWall = now(); lastRate = rate(); lastAudible = audible(); };
+    const sample = () => {
+      if (closed) return;
+      const wall = now(), current = position(), rawDelta = audio.currentTime - lastRaw;
+      const elapsed = Math.max(0, (wall - lastWall) / 1000);
+      // Timeline jumps never represent listening. Wall time only bounds a plausible media advance.
+      if (lastAudible && !audio.seeking && current !== null && lastPosition !== null && rawDelta > 0 && rawDelta <= elapsed * lastRate + .25) {
+        pending += Math.max(0, current - lastPosition) / lastRate;
+      }
+      lastRaw = audio.currentTime; lastPosition = current; lastWall = wall; lastRate = rate(); lastAudible = audible();
+      if (pending >= 5) commit();
+    };
+    const events = ['playing', 'canplay', 'timeupdate', 'pause', 'waiting', 'stalled', 'volumechange', 'ratechange', 'ended'];
+    const onEvent = event => {
+      sample();
+      if (['pause', 'waiting', 'stalled', 'ended'].includes(event.type) || (event.type === 'volumechange' && !audible())) commit();
+    };
+    for (const event of events) audio.addEventListener?.(event, onEvent);
+    for (const event of ['seeking', 'seeked']) audio.addEventListener?.(event, reset);
+    const timer = interval > 0 ? setInterval(sample, interval) : null;
+    return {
+      sample,
+      flush() { sample(); commit(); },
+      finish() {
+        if (closed) return;
+        sample(); commit(); closed = true;
+        if (timer !== null) clearInterval(timer);
+        for (const event of events) audio.removeEventListener?.(event, onEvent);
+        for (const event of ['seeking', 'seeked']) audio.removeEventListener?.(event, reset);
+      },
+    };
+  }
+
+  const api = {version, migrateProgress, migrateReview, read, save, readListeningTimes, addListeningTime, createPlaybackMeter};
   globalThis.TINGXU_STORAGE = api;
   if (typeof module !== 'undefined') module.exports = api;
 })();
