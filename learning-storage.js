@@ -45,13 +45,59 @@
     return output;
   }
 
+  const identityRevisions = {review: {}, progress: {}};
+
+  function reconcileIdentities(kind, data, practice, savedRevisions = {}) {
+    const revisions = validObject(savedRevisions) ? {...savedRevisions} : {};
+    const output = {...data};
+    let changed = false;
+    for (const [article, tasks] of Object.entries(practice)) {
+      const revision = tasks[0]?.identityRevision;
+      if (!revision || tasks.some(task => task.identityRevision !== revision) || revisions[article] === revision) continue;
+      const previous = data[article];
+      const mapped = tasks.map(task => ({...task, legacyTaskIds: task.previousTaskIds, legacyTaskIndices: task.previousTaskIndices}));
+      if (kind === 'progress' && Number.isInteger(previous) && previous >= 0) {
+        output[article] = migrateProgress({[article]: previous}, {[article]: mapped})[article];
+      } else if (kind === 'review' && validObject(previous)) {
+        const entries = migrateReview({[article]: previous}, {[article]: mapped})[article] || {};
+        for (const task of mapped) {
+          if (task.legacyTaskIds.length < 2 || !entries[task.id]) continue;
+          const sources = task.legacyTaskIds.map(id => previous[id]).filter(validObject);
+          const entry = entries[task.id];
+          entry.pendingLevels = [...new Set(sources.flatMap(row => Array.isArray(row.pendingLevels) ? row.pendingLevels : []))];
+          entry.levels = {};
+          for (const level of ['overview', 'standard', 'fine', 'micro']) {
+            const rows = sources.map(row => row.levels?.[level]).filter(validObject);
+            if (!rows.length) continue;
+            const complete = rows.length === task.legacyTaskIds.length;
+            const total = field => rows.reduce((sum, row) => sum + nonnegative(row[field]), 0);
+            const shared = field => complete ? Math.min(...rows.map(row => nonnegative(row[field]))) : 0;
+            entry.levels[level] = {wrong: total('wrong'), assisted: total('assisted'), correct: shared('correct'),
+              heard: shared('heard'), completed: shared('completed'), lastAt: Math.max(...rows.map(row => nonnegative(row.lastAt)))};
+          }
+        }
+        const retained = {...previous};
+        for (const task of mapped) for (const id of task.legacyTaskIds) delete retained[id];
+        output[article] = {...retained, ...entries};
+      }
+      revisions[article] = revision;
+      changed = true;
+    }
+    identityRevisions[kind] = revisions;
+    if (changed) save(kind, output);
+    return output;
+  }
+
   function read(kind, practice) {
     const key = `tingxu-corpus-${kind}-v2`;
     try {
       const current = JSON.parse(localStorage.getItem(key));
-      if (current?.version === version && validObject(current.data)) return current.data;
+      if (current?.version === version && validObject(current.data)) return reconcileIdentities(kind, current.data, practice, current.identityRevisions);
       const legacy = JSON.parse(localStorage.getItem(`tingxu-corpus-${kind}-v1`));
       const data = kind === 'progress' ? migrateProgress(legacy, practice) : migrateReview(legacy, practice);
+      // v1 migration already uses the final task aliases; mark this identity revision consumed.
+      identityRevisions[kind] = Object.fromEntries(Object.entries(practice)
+        .filter(([, tasks]) => tasks[0]?.identityRevision).map(([id, tasks]) => [id, tasks[0].identityRevision]));
       save(kind, data);
       return data;
     } catch {
@@ -61,7 +107,7 @@
 
   function save(kind, data) {
     try {
-      localStorage.setItem(`tingxu-corpus-${kind}-v2`, JSON.stringify({version, data}));
+      localStorage.setItem(`tingxu-corpus-${kind}-v2`, JSON.stringify({version, data, identityRevisions: identityRevisions[kind] || {}}));
       return true;
     } catch {
       return false;
