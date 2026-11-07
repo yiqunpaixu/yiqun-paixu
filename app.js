@@ -14,10 +14,42 @@
   ['cet4-2026-06-set2-news-report-3',{src:'images/news-3/s1-0.webp',alt:'学区董事会讨论学校安排'}],
   ['cet4-2026-06-set2-conversation-1',{src:'images/theatre-booking/a2-1.webp',alt:'伦敦夜晚的剧院外观'}],
   ['cet4-2026-06-set2-conversation-2',{src:'images/phone-habits/scene-06.webp',alt:'约翰发现每天使用手机的时间过长'}],
-  ['cet4-2026-06-set2-passage-1',{src:'images/wage-trends/scene-01.webp',alt:'求职者考虑从现有工作转到新的岗位'}],
+  ['cet4-2026-06-set2-passage-1',{src:'images/wage-trends/scene-01.webp',crop:{x:50,y:0,fit:'contain',mobileFit:'contain'},alt:'求职者考虑从现有工作转到新的岗位'}],
   ['cet4-2026-06-set2-passage-2',{src:'images/processed-food/scene-01.webp',alt:'高度加工食品及糖、脂肪和盐的示意'}],
   ['cet4-2026-06-set2-passage-3',{src:'images/home-work-study/scene-01.webp',alt:'家中两位成年人分别照顾孩子和完成家务'}],
  ]);
+ articleCovers.set("cet4-2022-12-set2-passage-3",{"src":"images/2022-12-set2-passage-3-shared-reading-book-choice/cover-wide.webp","alt":"亲子共读与选书","crop":{"x":50,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-12-set2-passage-2",{"src":"images/2022-12-set2-passage-2-home-colour-interior/cover-wide.webp","alt":"用喜爱的色彩改变家居","crop":{"x":70,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-12-set2-passage-1",{"src":"images/2022-12-set2-passage-1-deaf-tech-worker-communication/cover-wide.webp","alt":"聋人技术工作者的沟通变化","crop":{"x":50,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-12-set2-news-report-3",{"src":"images/2022-12-set2-news-report-3-mysterious-village-cash/cover-wide.webp","alt":"村庄街头的神秘现金","crop":{"x":50,"y":0,"fit":"contain","mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-12-set2-news-report-2",{"src":"images/2022-12-set2-news-report-2-greenland-early-ice-melt/cover-wide.webp","alt":"格陵兰提前融冰","crop":{"x":70,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-12-set2-news-report-1",{"src":"images/2022-12-set2-news-report-1-glasgow-pipe-band-championships/cover-wide.webp","alt":"格拉斯哥风笛乐队锦标赛","crop":{"x":50,"y":0,"mobileFit":"contain","fit":"contain"}});
+ articleCovers.set("cet4-2022-12-set2-conversation-2",{"src":"images/2022-12-set2-conversation-2-crowded-commute-rideshare/cover-wide.webp","alt":"拥挤通勤与拼车选择","crop":{"x":50,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-12-set2-conversation-1",{"src":"images/2022-12-set2-conversation-1-birthday-blues/cover-wide.webp","alt":"如何面对生日低落","crop":{"x":50,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-12-set1-passage-3",{"src":"images/2022-12-set1-passage-3-left-handed-research/cover-wide.webp","alt":"左利手的研究发现","crop":{"x":50,"y":0,"mobileFit":"contain","fit":"contain"}});
+ articleCovers.set("cet4-2022-12-set1-passage-2",{"src":"images/2022-12-set1-passage-2-sunshine-heat-body/cover-wide.webp","alt":"阳光高温与身体反应","crop":{"x":0,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-12-set1-passage-1",{"src":"images/2022-12-set1-passage-1-womens-rights-public-health/cover-wide.webp","alt":"女性权利与公共健康","crop":{"x":70,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-12-set1-news-report-3",{"src":"images/2022-12-set1-news-report-3-palmador-private-island/cover-wide.webp","alt":"西班牙私人海岛易主"});
+ articleCovers.set("cet4-2022-12-set1-news-report-2",{"src":"images/2022-12-set1-news-report-2-unexpected-sixth-baby/cover-wide.webp","alt":"意外诞生的第六个宝宝","crop":{"x":50,"y":0,"fit":"contain","mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-12-set1-news-report-1",{"src":"images/2022-12-set1-news-report-1-cadia-dam-collapse/cover-wide.webp","alt":"金矿尾矿坝局部坍塌","crop":{"x":50,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-12-set1-conversation-1",{"src":"images/2022-12-set1-conversation-1-gym-hot-yoga-enrolment/cover-wide.webp","alt":"咨询健身课程优惠","crop":{"x":50,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-09-set1-passage-3",{"src":"images/2022-09-set1-passage-3-passive-active-inspiration/cover-wide.webp","alt":"从被动启发走向行动创造"});
+ articleCovers.set("cet4-2022-09-set1-passage-2",{"src":"images/2022-09-set1-passage-2-children-digital-social-skills/cover-wide.webp","alt":"数字时代儿童社交能力","crop":{"x":70,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-09-set1-passage-1",{"src":"images/2022-09-set1-passage-1-person-perception-social-categorization/cover-wide.webp","alt":"识人印象与社会分类","crop":{"x":65,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-09-set1-news-report-3",{"src":"images/2022-09-set1-news-report-3-bangalore-helicopter-taxi/cover-wide.webp","alt":"班加罗尔直升机出租服务","crop":{"x":70,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-09-set1-news-report-2",{"src":"images/2022-09-set1-news-report-2-turkey-lorry-road-incident/cover-wide.webp","alt":"卡车侧翻与火鸡供应","crop":{"x":50,"y":0,"fit":"contain","mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-09-set1-news-report-1",{"src":"images/2022-09-set1-news-report-1-red-white-meat-cholesterol/cover-wide.webp","alt":"红肉白肉与胆固醇研究","crop":{"x":70,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-09-set1-conversation-2",{"src":"images/2022-09-set1-conversation-2-electronic-printed-textbooks/cover-wide.webp","alt":"电子课本与纸质课本之争"});
+ articleCovers.set("cet4-2022-06-set1-passage-3",{"src":"images/2022-06-set1-passage-3-cross-cultural-business-agreements/cover-wide.webp","alt":"跨文化商务中的口头与书面沟通"});
+ articleCovers.set("cet4-2022-06-set1-passage-2",{"src":"images/2022-06-set1-passage-2-workplace-diversity-decisions/cover-wide.webp","alt":"工作场所多样性的决策差异","crop":{"x":50,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-06-set1-passage-1",{"src":"images/2022-06-set1-passage-1-golden-rule-ethics/cover-wide.webp","alt":"黄金法则与法律边界","crop":{"x":70,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-06-set1-conversation-2",{"src":"images/2022-06-set1-conversation-2-study-guide-learning-notes/cover-wide.webp","alt":"整理学习笔记的方法","crop":{"x":50,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-06-set1-conversation-1",{"src":"images/2022-06-set1-conversation-1-south-african-friend-rugby/cover-wide.webp","alt":"南非朋友与橄榄球","crop":{"x":35,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-09-set1-conversation-1",{"src":"images/2022-09-set1-conversation-1-barbecue-cheese-shopping/cover-wide.webp","alt":"烧烤聚会买奶酪","crop":{"x":50,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-12-set1-conversation-2",{"src":"images/2022-12-set1-conversation-2-london-return-business-trip/cover-wide.webp","alt":"返伦敦行程与报销","crop":{"x":50,"y":0,"mobileFit":"contain"}});
+ articleCovers.set("cet4-2022-06-set1-news-report-3",{"src":"images/2022-06-set1-news-report-3-girl-siberian-forest-help/cover-wide.webp","alt":"四岁女孩雪林求援"});
+ articleCovers.set("cet4-2022-06-set1-news-report-1",{"src":"images/2022-06-set1-news-report-1-added-sugar-drinks-study/cover-wide.webp","alt":"添加糖饮料与健康研究","crop":{"x":100,"y":43,"mobileFit":"cover"}});
+ articleCovers.set("cet4-2022-06-set1-news-report-2",{"src":"images/2022-06-set1-news-report-2-paintings-found-rest-stop/cover-wide.webp","alt":"垃圾堆里发现的两幅古画","crop":{"x":85,"y":0,"mobileFit":"contain"}});
  articleCovers.set("cet4-2023-03-set1-passage-3",{src:"images/school-age-confidence-risk/cover-wide.webp",alt:"入学年龄、自信与风险倾向的教学情境"});
  articleCovers.set("cet4-2023-03-set1-passage-2",{src:"images/doll-orders-hospital-donation/cover-wide.webp",alt:"误购玩偶与分享礼物的教学情境"});
  articleCovers.set("cet4-2023-03-set1-passage-1",{src:"images/smartphones-school-debate/cover-wide.webp",alt:"课堂手机使用之争的教学情境"});
@@ -48,21 +80,21 @@
  articleCovers.set("cet4-2023-12-set1-conversation-2",{src:"images/family-hotel-checkin/cover-wide.webp",alt:"一家人的酒店入住与旅行建议的教学情境"});
  articleCovers.set('cet4-2026-06-set1-news-report-1',{src:'images/child-food-orders/scene-01.webp',banner:'images/child-food-orders/cover-wide.webp',alt:'孩子大量点餐给父亲留下高额账单'});
  articleCovers.set('cet4-2026-06-set1-news-report-2',{src:'images/zoo-visitor-study/cover-wide.webp',alt:'研究人员观察游客与大象的行为'});
- articleCovers.set('cet4-2026-06-set1-news-report-3',{src:'images/denver-ebike-incentives/cover-wide.webp',alt:'丹佛电动自行车补贴项目与城市出行情境'});
+ articleCovers.set('cet4-2026-06-set1-news-report-3',{src:'images/denver-ebike-incentives/cover-wide.webp',crop:{x:50,y:0,fit:'contain',mobileFit:'contain'},alt:'丹佛电动自行车补贴项目与城市出行情境'});
  articleCovers.set('cet4-2026-06-set1-conversation-1',{src:'images/rome-sightseeing/cover-wide.webp',alt:'Mike与Sue讨论罗马博物馆、街景和结伴旅行计划'});
  articleCovers.set('cet4-2026-06-set1-conversation-2',{src:'images/new-job-advice/cover-wide.webp',alt:'新人请教工作建议，讨论岗位职责与协作'});
  articleCovers.set('cet4-2026-06-set1-passage-1',{src:'images/emotion-consumer/cover-wide.webp',alt:'消费者思考商品与情感体验的关系'});
- articleCovers.set('cet4-2026-06-set1-passage-2',{src:'images/microplastic-diet/cover-wide.webp',alt:'研究者观察饮食样本中的微塑料示意'});
+ articleCovers.set('cet4-2026-06-set1-passage-2',{src:'images/microplastic-diet/cover-wide.webp',crop:{x:50,y:0,fit:'contain',mobileFit:'contain'},alt:'研究者观察饮食样本中的微塑料示意'});
  articleCovers.set('cet4-2026-06-set1-passage-3',{src:'images/pet-aging/cover-wide.webp',alt:'老年人与狗和猫互动陪伴的虚构情境'});
- articleCovers.set('cet4-2025-12-set2-news-report-1',{src:'images/egg-border/cover-wide.webp',alt:'旅客携带鸡蛋接受陆路边境检查的虚构情境'});
+ articleCovers.set('cet4-2025-12-set2-news-report-1',{src:'images/egg-border/cover-wide.webp',crop:{x:50,y:0,fit:'contain',mobileFit:'contain'},alt:'旅客携带鸡蛋接受陆路边境检查的虚构情境'});
  articleCovers.set('cet4-2025-12-set2-news-report-2',{src:'images/restaurant-policy/cover-wide.webp',alt:'餐厅经营者与带孩子的家庭讨论接待安排的虚构情境'});
  articleCovers.set('cet4-2025-12-set2-news-report-3',{src:'images/suburban-snake/cover-wide.webp',alt:'工作人员检查郊区工地发现的蛇蜕并搜寻线索的虚构情境'});
  articleCovers.set('cet4-2025-12-set2-conversation-1',{src:'images/hannah-winnings/cover-wide.webp',alt:'Hannah在奖金花光后与丈夫讨论跑车的虚构情境'});
  articleCovers.set('cet4-2025-12-set2-conversation-2',{src:'images/school-choice/cover-wide.webp',alt:"父母与Jake讨论不同学校的虚构情境"});
- articleCovers.set('cet4-2025-12-set2-passage-1',{src:'images/data-facts/cover-wide.webp',alt:"经理依据资料分析业务决策的虚构情境"});
- articleCovers.set('cet4-2025-12-set2-passage-2',{src:'images/long-life/cover-wide.webp',alt:"高龄老人分享生活经历与个人看法的虚构情境"});
- articleCovers.set('cet4-2025-12-set2-passage-3',{src:'images/classroom-seating/cover-wide.webp',alt:"学生与教师讨论教室座位的虚构情境"});
- articleCovers.set('cet4-2025-12-set1-news-report-1',{src:'images/cat-engine/cover-wide.webp',alt:"黑猫获救后与邻居主人团聚的虚构情境"});
+ articleCovers.set("cet4-2025-12-set2-passage-1",{"src":"images/data-facts/cover-wide.webp","alt":"经理依据资料分析业务决策的虚构情境","crop":{"x":50,"y":0,"fit":"contain","mobileFit":"contain"}});
+ articleCovers.set("cet4-2025-12-set2-passage-2",{"src":"images/long-life/cover-wide.webp","alt":"高龄老人分享生活经历与个人看法的虚构情境","crop":{"x":50,"y":0,"fit":"contain","mobileFit":"contain"}});
+ articleCovers.set("cet4-2025-12-set2-passage-3",{"src":"images/classroom-seating/cover-wide.webp","alt":"学生与教师讨论教室座位的虚构情境","crop":{"x":50,"y":0,"fit":"contain","mobileFit":"contain"}});
+ articleCovers.set('cet4-2025-12-set1-news-report-1',{src:'images/cat-engine/cover-wide.webp',crop:{x:50,y:0,fit:'contain',mobileFit:'contain'},alt:"黑猫获救后与邻居主人团聚的虚构情境"});
  articleCovers.set('cet4-2025-12-set1-news-report-2',{src:'images/spring-games/cover-wide.webp',alt:"春季运动会上运动员展现能力与组织者鼓励的虚构情境"});
  articleCovers.set('cet4-2025-12-set1-news-report-3',{src:'images/chocolate-rabbit/cover-wide.webp',alt:"金色巧克力兔产品外观与诉讼争议的情境"});
  articleCovers.set('cet4-2025-12-set1-conversation-1',{src:'images/vegetarian-dinner/cover-wide.webp',alt:"素食晚餐准备与饮食选择讨论"});
@@ -155,7 +187,7 @@
  const design={palette:'forest',layout:'illustrated',radius:18};
  let corpusMedia=null,corpusPlaybackMeter=null,corpusAudio=null,corpusAudioSource='',corpusPlaybackToken=0,corpusSeekTimer=null,corpusEnd=0,corpusTimer=null,corpusCheckTimer=null,feedbackTimer=null,feedbackAudio=null;
  const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
- const coverHTML=(id,className,lazy=false)=>{const cover=articleCovers.get(id),original=cover&&(className==='ls-corpus-hero'&&cover.banner?cover.banner:cover.src),src=delivery?delivery.coverURL(id,original):original;return cover&&src?`<img class="${className}" src="${escapeHTML(src)}" alt="${escapeHTML(cover.alt)}" ${lazy?'loading="lazy" ':''}decoding="async">`:'';};
+ const coverHTML=(id,className,lazy=false)=>{const cover=articleCovers.get(id),original=cover&&(className==='ls-corpus-hero'&&cover.banner?cover.banner:cover.src),src=delivery?delivery.coverURL(id,original):original,crop=cover?.crop,percent=(n,fallback)=>Number.isFinite(n)?Math.max(0,Math.min(100,n)):fallback,cropStyle=crop?` style="--ls-cover-x:${percent(crop.x,50)}%;--ls-cover-y:${percent(crop.y,43)}%;--ls-cover-fit:${crop.fit==='contain'?'contain':'cover'};--ls-cover-mobile-fit:${(crop.mobileFit??crop.fit)==='contain'?'contain':'cover'}"`:'';return cover&&src?`<img class="${className}" src="${escapeHTML(src)}" alt="${escapeHTML(cover.alt)}"${cropStyle} ${lazy?'loading="lazy" ':''}decoding="async">`:'';};
  const neutralChunk=s=>String(s).replace(/[.!?,;:]+\s*$/,'').toLowerCase().replace(/\bi\b/g,'I');
  const icon=(name)=>`<i data-lucide="${name}" aria-hidden="true"></i>`;
  const corpusVisualHTML=visual=>visual.image?`<span class="ls-practice-visual ls-practice-photo"><img src="${escapeHTML(visual.image)}" alt="${escapeHTML(visual.alt||visual.type)}" loading="lazy" decoding="async"></span>`:`<span class="ls-practice-visual" role="img" aria-label="${escapeHTML(visual.type)}语义示意图">${icon(visual.icon)}</span>`;
@@ -165,7 +197,7 @@
  function persist(){try{localStorage.setItem('tingxu-preferences-v1',JSON.stringify({auto:state.auto,replay:state.replay,design:{...design}}));}catch(error){}}
  // Progression is automatic; ignore the legacy manual preference after removing its control.
  function restorePreferences(){try{const saved=JSON.parse(localStorage.getItem('tingxu-preferences-v1'))||JSON.parse(localStorage.getItem('tingxu-demo-v1'))?.privateContent;if(!saved)return;state.replay=saved.replay!==false;if(saved.design){if(['forest','ink'].includes(saved.design.palette))design.palette=saved.design.palette;if(['illustrated','compact'].includes(saved.design.layout))design.layout=saved.design.layout;if(Number.isFinite(saved.design.radius))design.radius=Math.max(8,Math.min(24,saved.design.radius));}}catch(error){}}
- function applyDesign(){root.dataset.layout=design.layout;root.style.setProperty('--ls-radius',design.radius+'px');const ink=design.palette==='ink';root.style.setProperty('--ls-accent',ink?'#314f6d':'#245b48');root.style.setProperty('--ls-soft',ink?'#e8edf0':'#e8eee7');root.style.setProperty('--ls-on-accent','#fffdf8');}
+ function applyDesign(){root.dataset.layout=design.layout;root.dataset.palette=design.palette;root.style.setProperty('--ls-radius',design.radius+'px');}
  function stopCorpus(){corpusPlaybackToken++;clearTimeout(corpusSeekTimer);corpusPlaybackMeter?.finish();corpusPlaybackMeter=null;if(corpusMedia){corpusMedia.pause();for(const event of ['ontimeupdate','onended','onerror','onloadedmetadata','oncanplay','onseeked','onplaying'])corpusMedia[event]=null;corpusMedia=null;}state.corpusPlaying=false;state.corpusLine=-1;}
  function stopTimers(){clearTimeout(corpusTimer);clearTimeout(corpusCheckTimer);clearTimeout(feedbackTimer);stopCorpus();}
  window.addEventListener('pagehide',stopTimers);
